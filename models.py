@@ -34,27 +34,27 @@ class Player(models.Model):
     ]
     player_gender = models.CharField("Gender", max_length=30, choices=GENDER_CHOICES, default='None')
 
-    # sports played
-    BASKETBALL = 'Bball'
-    SOCCER = 'Soc.'
-    SOFTBALL = 'Soft.'
-    SPORTS_CHOICES = [
-        (BASKETBALL, 'Basketball'),
-        (SOCCER, 'Soccer'),
-        (SOFTBALL, 'Softball'),
-    ]
-    player_sports = MultiSelectField(choices = SPORTS_CHOICES, default='None')
+    # # sports played
+    # BASKETBALL = 'Bball'
+    # SOCCER = 'Soc.'
+    # SOFTBALL = 'Soft.'
+    # SPORTS_CHOICES = [
+    #     (BASKETBALL, 'Basketball'),
+    #     (SOCCER, 'Soccer'),
+    #     (SOFTBALL, 'Softball'),
+    # ]
+    # player_sports = MultiSelectField(choices = SPORTS_CHOICES, default='None')
 
     # sport skill levels
-    basketball_skill_level = models.PositiveSmallIntegerField("Basketball Skill Level", default="None")
-    soccer_skill_level = models.PositiveSmallIntegerField("Soccer Skill Level", default="None")
-    softball_skill_level = models.PositiveSmallIntegerField("Softball Skill Level", default="None")
+    # basketball_skill_level = models.PositiveSmallIntegerField("Basketball Skill Level", default="None")
+    # soccer_skill_level = models.PositiveSmallIntegerField("Soccer Skill Level", default="None")
+    # softball_skill_level = models.PositiveSmallIntegerField("Softball Skill Level", default="None")
 
     # birthday
     player_birthday = models.DateField("Birthday", default=1/1/2000)
 
-    # rating
-    player_rating = models.DecimalField("Rating", max_digits=2, decimal_places=1, default=0)
+    # # rating
+    # player_rating = models.DecimalField("Rating", max_digits=2, decimal_places=1, default=0)
 
     # location
     player_location = models.CharField("Location", max_length=30, default='None')
@@ -63,24 +63,26 @@ class Player(models.Model):
     player_distance_preference = models.PositiveSmallIntegerField("Playing Range", default=25)
 
 
-    #player_times_available =  # TODO: need to create table relating digits to times/days of week
+    # #player_times_available =  # TODO: need to create table relating digits to times/days of week
 
-    # player tags
-    COMPETE = 'Comp.'
-    SOCIAL = 'Soc.'
-    GOALS_CHOICES = [
-        (COMPETE, 'Competition'),
-        (SOCIAL, 'Socializing'),
-    ]
-    player_tags = MultiSelectField("Playing Goals", max_length=30, choices=GOALS_CHOICES)
+    # # player tags
+    # COMPETE = 'Comp.'
+    # SOCIAL = 'Soc.'
+    # GOALS_CHOICES = [
+    #     (COMPETE, 'Competition'),
+    #     (SOCIAL, 'Socializing'),
+    # ]
+    # player_tags = MultiSelectField("Playing Goals", max_length=30, choices=GOALS_CHOICES, default="None")
 
-    # player badges
-    BADGE1 = 'Temp1'
-    BADGE2 = 'Temp2'
-    BADGE_CHOICES = [
-        (BADGE1, 'Badge 1'),
-        (BADGE2, 'Badge 2'),
-    ]
+    # # player badges
+    # BADGE1 = 'Temp1'
+    # BADGE2 = 'Temp2'
+    # BADGE_CHOICES = [
+    #     (BADGE1, 'Badge 1'),
+    #     (BADGE2, 'Badge 2'),
+    # ]
+    # player_badges = MultiSelectField("Badges", max_length=30, choices=BADGE_CHOICES, default="None")
+
 
     # associated groups
 
@@ -94,32 +96,35 @@ class Player(models.Model):
     # upcoming games
 
 
-
     def __str__(self):
         return self.player_first_name + self.player_last_name
 
+
+
 class Group(models.Model):
     # name
-    group_name = models.CharField("Group Name", max_length=30)
+    group_name = models.CharField("Group Name", max_length=30, default="None")
 
     # location
-    group_location = models.CharField("Group Location", max_length=30)
+    group_location = models.CharField("Group Location", max_length=30, default="None")
 
     # description
     group_description = models.CharField("Group Description", max_length=200, default="None")
 
-    # group type
-    PUBLIC = 'Pub.'
-    FRIENDS = 'Fr.'
-    INVITE = 'Inv.'
-    GROUP_TYPE_CHOICES = [
-        (PUBLIC, 'Public'),
-        (FRIENDS, 'Friends of Group Members'),
-        (INVITE, 'Invite by Group Members Only')
-    ]
+    # # group type
+    # PUBLIC = 'Pub.'
+    # FRIENDS = 'Fr.'
+    # INVITE = 'Inv.'
+    # GROUP_TYPE_CHOICES = [
+    #     (PUBLIC, 'Public'),
+    #     (FRIENDS, 'Friends of Group Members'),
+    #     (INVITE, 'Invite by Group Members Only')
+    # ]
+    # group_type = models.CharField("Group Type", max_length=4, choices=GROUP_TYPE_CHOICES, default=PUBLIC)
 
-    # rating
-    player_rating = models.DecimalField("Rating", max_digits=2, decimal_places=1, default=0)
+    # # rating
+    # group_rating = models.DecimalField("Rating", max_digits=2, decimal_places=1, default=0)
+
 
     # sports
     BASKETBALL = 'Bball'
@@ -130,13 +135,13 @@ class Group(models.Model):
         (SOCCER, 'Soccer'),
         (SOFTBALL, 'Softball'),
     ]
-    group_sport = models.CharField("Group Sport", max_length=30, choices=SPORTS_CHOICES) # do we want to allow multisport groups?
+    group_sport = models.CharField("Group Sport", max_length=30, choices=SPORTS_CHOICES, default="None") # do we want to allow multisport groups?
 
     # skill level
-    group_skill_level = models.PositiveSmallIntegerField("Group Skill Level")
+    group_skill_level = models.PositiveSmallIntegerField("Group Skill Level", default = 3)
 
     # group size
-    group_size = models.PositiveSmallIntegerField("Number of Members")
+    group_size = models.PositiveSmallIntegerField("Number of Members", default = 0)
 
     # group tags
     COMPETE = 'Comp.'
@@ -145,18 +150,15 @@ class Group(models.Model):
         (COMPETE, 'Competition'),
         (SOCIAL, 'Socializing'),
     ]
-    group_goals = models.CharField("Playing Goals", max_length=30, choices=GOALS_CHOICES)
-
+    group_goals = models.CharField("Group Goals", max_length=30, choices=GOALS_CHOICES, default=COMPETE)
 
     # group members
 
 
-
-    
-
-
     def __str__(self):
         return self.group_name
+
+
 
 class Venue(models.Model):
     # name
