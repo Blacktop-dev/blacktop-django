@@ -34,30 +34,30 @@ class Player(models.Model):
     ]
     player_gender = models.CharField("Gender", max_length=30, choices=GENDER_CHOICES, default='None')
 
-    # # sports played
-    # BASKETBALL = 'Bball'
-    # SOCCER = 'Soc.'
-    # SOFTBALL = 'Soft.'
-    # SPORTS_CHOICES = [
-    #     (BASKETBALL, 'Basketball'),
-    #     (SOCCER, 'Soccer'),
-    #     (SOFTBALL, 'Softball'),
-    # ]
-    # player_sports = MultiSelectField(choices = SPORTS_CHOICES, default='None')
+    # sports played
+    BASKETBALL = 'Bball'
+    SOCCER = 'Soc.'
+    SOFTBALL = 'Soft.'
+    SPORTS_CHOICES = [
+        (BASKETBALL, 'Basketball'),
+        (SOCCER, 'Soccer'),
+        (SOFTBALL, 'Softball'),
+    ]
+    player_sports = MultiSelectField("Player Sports", choices = SPORTS_CHOICES, default='None')
 
     # sport skill levels
-    # basketball_skill_level = models.PositiveSmallIntegerField("Basketball Skill Level", default="None")
-    # soccer_skill_level = models.PositiveSmallIntegerField("Soccer Skill Level", default="None")
-    # softball_skill_level = models.PositiveSmallIntegerField("Softball Skill Level", default="None")
+    basketball_skill_level = models.PositiveSmallIntegerField("Basketball Skill Level", default=0)
+    soccer_skill_level = models.PositiveSmallIntegerField("Soccer Skill Level", default=0)
+    softball_skill_level = models.PositiveSmallIntegerField("Softball Skill Level", default=0)
 
     # birthday
-    player_birthday = models.DateField("Birthday", default=1/1/2000)
+    player_birthday = models.DateField("Player Birthday", default=1/1/2000)
 
-    # # rating
-    # player_rating = models.DecimalField("Rating", max_digits=2, decimal_places=1, default=0)
+    # rating
+    player_rating = models.DecimalField("Player Rating", max_digits=2, decimal_places=1, default=0)
 
     # location
-    player_location = models.CharField("Location", max_length=30, default='None')
+    player_location = models.CharField("Player Location", max_length=30, default='None')
 
     # playing range
     player_distance_preference = models.PositiveSmallIntegerField("Playing Range", default=25)
@@ -65,23 +65,23 @@ class Player(models.Model):
 
     # #player_times_available =  # TODO: need to create table relating digits to times/days of week
 
-    # # player tags
-    # COMPETE = 'Comp.'
-    # SOCIAL = 'Soc.'
-    # GOALS_CHOICES = [
-    #     (COMPETE, 'Competition'),
-    #     (SOCIAL, 'Socializing'),
-    # ]
-    # player_tags = MultiSelectField("Playing Goals", max_length=30, choices=GOALS_CHOICES, default="None")
+    # player tags
+    COMPETE = 'Comp.'
+    SOCIAL = 'Soc.'
+    GOALS_CHOICES = [
+        (COMPETE, 'Competition'),
+        (SOCIAL, 'Socializing'),
+    ]
+    player_tags = MultiSelectField("Player Tags", max_length=30, choices=GOALS_CHOICES, default="None")
 
-    # # player badges
-    # BADGE1 = 'Temp1'
-    # BADGE2 = 'Temp2'
-    # BADGE_CHOICES = [
-    #     (BADGE1, 'Badge 1'),
-    #     (BADGE2, 'Badge 2'),
-    # ]
-    # player_badges = MultiSelectField("Badges", max_length=30, choices=BADGE_CHOICES, default="None")
+    # player badges
+    BADGE1 = 'Temp1'
+    BADGE2 = 'Temp2'
+    BADGE_CHOICES = [
+        (BADGE1, 'Badge 1'),
+        (BADGE2, 'Badge 2'),
+    ]
+    player_badges = MultiSelectField("Player Badges", max_length=30, choices=BADGE_CHOICES, default="None")
 
 
     # associated groups
@@ -111,19 +111,19 @@ class Group(models.Model):
     # description
     group_description = models.CharField("Group Description", max_length=200, default="None")
 
-    # # group type
-    # PUBLIC = 'Pub.'
-    # FRIENDS = 'Fr.'
-    # INVITE = 'Inv.'
-    # GROUP_TYPE_CHOICES = [
-    #     (PUBLIC, 'Public'),
-    #     (FRIENDS, 'Friends of Group Members'),
-    #     (INVITE, 'Invite by Group Members Only')
-    # ]
-    # group_type = models.CharField("Group Type", max_length=4, choices=GROUP_TYPE_CHOICES, default=PUBLIC)
+    # group type
+    PUBLIC = 'Pub.'
+    FRIENDS = 'Fr.'
+    INVITE = 'Inv.'
+    GROUP_TYPE_CHOICES = [
+        (PUBLIC, 'Public'),
+        (FRIENDS, 'Friends Only'),
+        (INVITE, 'Invite Only'),
+    ]
+    group_type = models.CharField("Group Type", max_length=5, choices=GROUP_TYPE_CHOICES, default=PUBLIC)
 
-    # # rating
-    # group_rating = models.DecimalField("Rating", max_digits=2, decimal_places=1, default=0)
+    # rating
+    group_rating = models.DecimalField("Group Rating", max_digits=2, decimal_places=1, default=0)
 
 
     # sports
@@ -150,7 +150,7 @@ class Group(models.Model):
         (COMPETE, 'Competition'),
         (SOCIAL, 'Socializing'),
     ]
-    group_goals = models.CharField("Group Goals", max_length=30, choices=GOALS_CHOICES, default=COMPETE)
+    group_goals = models.CharField("Group Tags", max_length=30, choices=GOALS_CHOICES, default=COMPETE)
 
     # group members
 
@@ -176,9 +176,56 @@ class Venue(models.Model):
     # hours
 
     # rating
+    venue_rating = models.DecimalField("Venue Rating", max_digits=2, decimal_places=1, default=0)
 
     # available sports
+    BASKETBALL = 'Bball'
+    SOCCER = 'Soc.'
+    SOFTBALL = 'Soft.'
+    SPORTS_CHOICES = [
+        (BASKETBALL, 'Basketball'),
+        (SOCCER, 'Soccer'),
+        (SOFTBALL, 'Softball'),
+    ]
+    venue_sports = MultiSelectField("Venue Sports", choices=SPORTS_CHOICES, default='None')
 
     # type
+    CITY = 'City'
+    SCHOOL = 'School'
+    REC = 'Rec.'
+    VENUE_TYPE_CHOICES = [
+        (CITY, 'City Property'),
+        (SCHOOL, 'School Property'),
+        (REC, 'Rec. Facility')
+    ]
+    venue_type = models.CharField("Venue Type", max_length = 6, choices=VENUE_TYPE_CHOICES, default="None")
 
     # size/capacity
+    venue_capacity = models.PositiveSmallIntegerField("Venue Capacity", default=0)
+
+class Availability(models.Model):
+    
+    # id of relevant player/group/venue
+    
+    # day of week
+    SUN = 'Sunday'
+    MON = 'Monday'
+    TUE = 'Tuesday'
+    WED = 'Wednesday'
+    THU = 'Thursday'
+    FRI = 'Friday'
+    SAT = 'Saturday'
+    DAY_CHOICES = [
+        (SUN, 'Sunday'),
+        (MON, 'Monday'),
+        (TUE, 'Tuesday'),
+        (WED, 'Wednesday'),
+        (THU, 'Thursday'),
+        (FRI, 'Friday'),
+        (SAT, 'Saturday')
+    ]
+    day = models.CharField("Day of Week", max_length = 9, choices=DAY_CHOICES, default="None")
+
+    # hours
+    open_time = models.TimeField("Opening Time")
+    close_time = models.TimeField("Closing Time")
