@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 # Create your views here.
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic.base import View
 from friendship.models import Friend, Follow, Block
 
@@ -79,23 +79,13 @@ class Display(ListView):
         qs = super().get_queryset() 
         return qs#.filter(name__startswith=self.kwargs['name'])
 
-
 class FriendRequestView(TemplateView):
-    def friendship_add_friend(
-        request, to_username, template_name="friendrequest.html"
-    ):
-        """ Create a FriendshipRequest """
-        ctx = {"to_username": to_username}
+    template_name = 'friendrequest.html'
 
-        if request.method == "POST":
-            to_user = user_model.objects.get(username=to_username)
-            from_user = request.user
-            try:
-                Friend.objects.add_friend(from_user, to_user)
-            except AlreadyExistsError as e:
-                ctx["errors"] = ["%s" % e]
-            else:
-                return redirect("friendship_request_list")
-
-        return render(request, template_name, ctx)
-
+    def get_context_data(self, **kwargs):
+        ctx = {}
+        ctx['loggedIn'] = False
+        if self.request.user.is_authenticated:
+            ctx['loggedIn'] = True
+            ctx['friend_list'] = Friend.objects.unread_requests(user=self.request.user)
+        return ctx

@@ -1,8 +1,30 @@
-{% if not to_username == request.user.username %}
-{% if errors %}<p>{{ errors|join:", " }}</p>{% endif %}
-<form method="post">
-{% csrf_token %}
-<input type="hidden" name="to_username" value="{{ to_username }}" />
-<input type="submit" value="add {{ to_username }} as a friend" />
-</form>
+{% block title %}User Home Page{% endblock %}
+
+{% if loggedIn %}
+	<br>
+	<br>
+    Hello {{ request.user.username }}<br>
+    <br>
+
+    <p>List of your friends:</p>
+    {% load friendshiptags %}
+	{% friends request.user %}
+
+	<a href="/friendship/friend/requests">Click to see outstanding friend requests</a>
+
+
+	<p>My Bio and Info:</p>
+    <img src="{{ request.user.userprofile.avatar.url }}" style="max-height: 500px;max-width: 500px"/>
+    <br>
+    <p>Desciption:
+        {{ request.user.userprofile.desc }}
+    </p>
+    <p>
+        Age:{{ request.user.userprofile.age }}
+    </p>
+
+    <a href="{% url 'bt_site:logout' %}">Logout</a>
+{% else %}
+    Not logged in. <br>
+    <a href="{% url 'bt_site:signup' %}">Sign Up</a> or <a href="{% url 'bt_site:login' %}">Login</a>
 {% endif %}

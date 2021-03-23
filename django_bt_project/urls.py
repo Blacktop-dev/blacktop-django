@@ -21,8 +21,8 @@ from . import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^friendship/', include('friendship.urls')),
     url(r'^', include('bt_site.urls')),
-    url(r'^friendship/', include('friendship.urls'))
 ]
 
 if settings.DEBUG:

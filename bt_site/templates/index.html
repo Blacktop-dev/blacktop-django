@@ -8,13 +8,16 @@
 {% if loggedIn %}
     Hello {{ request.user.username }}<br>
     <br>
-    {{User.objects.all}}
+    
+    <a href="{% url 'bt_site:friendrequest' %}">Go To My Profile Page</a>
+    <br>
+    <a href="/friendship/users/">Make Some Friends</a>
 
-
+    <h1>My Info:</h1>
     <img src="{{ request.user.userprofile.avatar.url }}" style="max-height: 500px;max-width: 500px"/>
     <br>
-    <p>Desciption:
-        {{ request.user.userprofile.desc }}
+
+    <p>Desciption: {{ request.user.userprofile.desc }}
     </p>
     <p>
         Age:{{ request.user.userprofile.age }}
