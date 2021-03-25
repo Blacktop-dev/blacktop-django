@@ -1,0 +1,38 @@
+
+
+
+
+{% block title %}Find a partner or team{% endblock %}
+
+
+
+
+<ul>
+
+
+
+<div class = "container">
+	
+	<form method="GET">
+		{{ filter.form }}
+		<button type="submit" class="btn btn-primary">Search</button>
+	</form>
+</div>
+	
+{% for list_user in filter.qs %}
+    <li>
+        {% if user %}
+        	<h2 style="border-bottom:#000000 solid medium">{{ list_user.user.username }}</h2>
+        	<img src="{{ list_user.user.userprofile.avatar.url }}" style="max-height: 300px;max-width: 300px"/>
+        	<br>
+        	Description: {{ list_user.desc }} | Age: {{ list_user.age }} 
+        	<br>
+            <a href="{% url 'friendship_add_friend' list_user.user.username %}">add as friend</a>
+        {% endif %}
+    </li>
+{% endfor %}
+
+</ul>
+
+
+

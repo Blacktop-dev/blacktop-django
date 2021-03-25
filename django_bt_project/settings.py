@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bt_site.apps.BtSiteConfig',
     'bt_site.apps.FriendConfig',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

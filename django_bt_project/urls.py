@@ -16,11 +16,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
+#from bt_site.views import all_users_bt
+from bt_site.views import displayAll
+from bt_site.views import friendship_add_friend
+from django.contrib.auth.decorators import login_required
 
 from . import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    #url(r'^friendship/users/$', view=all_users_bt, name="friendship_view_users"),
+    url(r'^friendship/users/$', login_required(displayAll.as_view()), name="friendship_view_users"),
+    url(r'^friendship/friend/add/(?P<to_username>[\w-]+)/$', view=friendship_add_friend, name="friendship_add_friend"),
     url(r'^friendship/', include('friendship.urls')),
     url(r'^', include('bt_site.urls')),
 ]
