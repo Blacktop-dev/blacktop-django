@@ -29,6 +29,9 @@ except ImportError:
     user_model = User
 
 
+def sent_success(request):
+	return render(request, "friend_request_success.html")
+
 
 class Index(TemplateView):
     template_name = 'index.html'
@@ -135,7 +138,8 @@ def friendship_add_friend(
         except AlreadyExistsError as e:
             ctx["errors"] = ["%s" % e]
         else:
-            return redirect("friendship_request_list")
+            #return redirect("friendship_request_list")
+            return redirect('/sent/success')
 
     return render(request, template_name, ctx)
 

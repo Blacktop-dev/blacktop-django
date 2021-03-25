@@ -9,8 +9,16 @@
     <p>List of your friends:</p>
     {% load friendshiptags %}
 	{% friends request.user %}
+	<p>End of list of your friends</p>
 
-	<a href="/friendship/friend/requests">Click to see outstanding friend requests</a>
+
+	Friend Requests that need approval: {% friend_request_count request.user %}
+	<br>
+	<a href="/friendship/friend/requests">Click to approve players that requested your friendship</a>
+
+
+	
+
 
 
 	<p>My Bio and Info:</p>
