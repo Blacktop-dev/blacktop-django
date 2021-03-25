@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'staatlichesregular';
+    src: url('fonts/staatliches-regular-webfont.woff2') format('woff2'),
+         url('fonts/staatliches-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'staatlichesregular';
+}
+
+body {
+    background-color: #F53155;
+}
+
+.centered {
+    display: block;
+    text-align: center;
+}
+
+.login-logo {
+    width: 50%;
+    margin-top: 8%;
+}
+
+form {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+/* .centered-button {
+    margin: auto;
+} */
+
+h1 {
+    color: black;
+}
+
+.big-button {
+    font-size: 20px;
+    background-color: black;
+    border-radius: 10%;
+    padding: 10px 30px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
