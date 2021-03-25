@@ -25,11 +25,11 @@ from . import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^', include('bt_site.urls')),
     #url(r'^friendship/users/$', view=all_users_bt, name="friendship_view_users"),
     url(r'^friendship/users/$', login_required(displayAll.as_view()), name="friendship_view_users"),
     url(r'^friendship/friend/add/(?P<to_username>[\w-]+)/$', view=friendship_add_friend, name="friendship_add_friend"),
     url(r'^friendship/', include('friendship.urls')),
-    url(r'^', include('bt_site.urls')),
 ]
 
 if settings.DEBUG:
