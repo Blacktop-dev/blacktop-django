@@ -7,8 +7,8 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic.base import View
 from friendship.models import Friend, Follow, Block
 
-from .forms import ProfileForm
-from .forms import UserForm, FriendRequestForm
+from .forms import ProfileForm, TeeTimeForm
+from .forms import UserForm#, FriendRequestForm
 from .models import User, UserProfile
 from .filters import UserFilter
 from django.contrib.auth.decorators import login_required
@@ -80,7 +80,31 @@ class IndexView(TemplateView):
             ctx['loggedIn'] = True
         return ctx
 
+#Jess - tee time create view
 class AddTeeTimeView(TemplateView):
+    template_name = 'add_tee_time.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = super(AddTeeTimeView, self).get_context_data(**kwargs)
+        ctx['tee_time_form'] = TeeTimeForm(prefix='tee')
+        ctx['loggedIn'] = False
+        if self.request.user.is_authenticated:
+            ctx['loggedIn'] = True
+        return ctx
+
+    def post(self, request, *args, **kwargs):
+        tee_time_form = TeeTimeForm(request.POST, prefix='tee')
+        if tee_time_form.is_valid():
+            tee_time = tee_time_form.save(commit=False)
+            #tee_time.save()
+            tee_time.tee_time_users = self.request.user.userprofile
+            #tee_time.tee_time_users.set(self.request.user.userprofile)
+            tee_time.save()
+            return HttpResponse("Made the tee!<br><a href='/my_tee_times'>Go to home</a>")
+        else:
+            return HttpResponse("Error with tee : <a href='/signup'>Try again</a>!")
+
+'''class AddTeeTimeView(TemplateView):
     template_name = 'add_tee_time.html'
 
     def get_context_data(self, **kwargs):
@@ -88,7 +112,7 @@ class AddTeeTimeView(TemplateView):
         ctx['loggedIn'] = False
         if self.request.user.is_authenticated:
             ctx['loggedIn'] = True
-        return ctx
+        return ctx'''
 
 class FindRidesView(TemplateView):
     template_name = 'find_rides.html'
@@ -109,6 +133,7 @@ class MyTeeTimesView(TemplateView):
         if self.request.user.is_authenticated:
             ctx['loggedIn'] = True
         return ctx
+
 
 
 ### GENERAL VIEWS ###

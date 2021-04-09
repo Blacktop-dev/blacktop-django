@@ -27,7 +27,11 @@ class UserProfile(models.Model):
     user_neighborhood = models.CharField('Neighborhood', max_length=20, choices=NEIGHBORHOOD_CHOICES, blank=True)
     # user_tee_times = models.ManyToManyField(related_name='bt_site.tee_time_users')
 
+
 class TeeTime(models.Model):
-    tee_time_users = models.ManyToManyField('UserProfile', related_name='user_tee_times')
+    #TODO: should probs change this to User instead of UserProfile bc cases were UserProfile does not exist
+    #tee_time_users = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    tee_time_users = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    #tee_time_users = models.ManyToManyField('UserProfile', related_name='user_tee_times')
     tee_time_date = models.DateField('Date of Tee Time')
     tee_time_course = models.CharField('Golf Course', max_length=30, choices=COURSE_CHOICES)

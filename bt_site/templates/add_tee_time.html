@@ -49,9 +49,9 @@
 
     {% if loggedIn %}
     <div class="centered">
-        <form method="post" action="{% url 'bt_site:add_tee_time' %}">
+        <form action="{% url 'bt_site:add_tee_time' %}" enctype="multipart/form-data" method="post"><!-- id='teetime-form'>-->
             {% csrf_token %}
-            {{ TeeTimeForm }}
+            {{ tee_time_form.as_p }}
             <button type="submit">Submit Tee Time</button>
         </form>
     </div>
