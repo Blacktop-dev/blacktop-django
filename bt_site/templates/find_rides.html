@@ -47,7 +47,7 @@
 </div>
 
 {% if loggedIn %}
-<div class="container">
+{% comment %}<div class="container">
 	<br>
 	<form method="GET">
 		{{ filter.form }}
@@ -59,12 +59,30 @@
 <div>
     {{ tee_time}}
 </div>
+{% endcomment %}
+<!-- THE LOOP DISPLAYING TEE TIMES STARTS HERE -->
+<div class='centered'>
+{% for tee_time_group in tee_times %}
+    <table class='table' id="tee-time-table">
 
-<!-- {% for list_user in filter.qs %}
-        {% if user %}
-			<h2>{{ list_user.user.username }}</h2>
-        {% endif %}
-{% endfor %} -->
+        <h1>Tee Times on {{ tee_time_group.tee_group_date }}</h1>
+        <tr>
+                    <th>Course</th>
+                    <th>Name</th>
+                    <th>Request</th>
+        </tr>
+        {% for tee in tee_time_group.tee_group_members.all %}
+            {% for us in tee.tee_time_users.all %}
+                    <tr>
+                        <td>{{ tee.tee_time_course }}</td>
+                        <td>{{ us.user.username }}</td>
+                        <td><a href="{% url 'bt_site:add_friendteetime' us.user.username tee.id %}">add as this time/person!</a></td>
+                    </tr>
+            {% endfor %}
+        {% endfor %}
+</table>
+{% endfor %}
+</div>
 
 <div class="centered logout-button">
     <a href="{% url 'bt_site:logout' %}">Logout</a></button>

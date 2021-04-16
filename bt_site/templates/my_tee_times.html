@@ -46,31 +46,46 @@
     <p>Display my tee times and ride partners here</p>
     <br><br><br>
 
+<div class='centered'>
     {% if loggedIn %}
-    <div class='centered'>
-        <h1>Tee Time #1</h1>
-        <h5>*Golf Course* | *Date* | *Time* </h5>
-        <table class='table' id="tee-time-table">
+    {% for tee in tee_times %}
+       <h1>Tee Time #{{ forloop.counter }}</h1>
+
+       <h5>{{tee.tee_time_date}} | {{tee.tee_time_course}} </h5>
+
+       <table class='table' id="tee-time-table">
             <tr>
                 <th>Name</th>
-                <th>Tee Time</th>
                 <th>Email</th>
                 <th>Phone Number</th>
+                <th>Status</th>
             </tr>
+            {% for pot in tee.tee_time_potential_users.all %}
             <tr>
-                <td>*Player1*</td>
-                <td>*10:45am*</td>
-                <td>*player@gmail.com*</td>
-                <td>*(123) 456-7890*</td>
+                <td>{{pot.user.username}}</td>
+                <td>{{pot.user.email}}</td>
+                <td>{{pot.user_phone_number}}</td>
+                <td>
+                    <a href="{% url 'bt_site:accept_teetime_request' pot.user.username tee.id %}">Pending Request</a>
+                </td>    
             </tr>
-            <tr>
-                <td>*Player2*</td>
-                <td>*10:30am*</td>
-                <td>*player2@gmail.com*</td>
-                <td>*(123) 456-7891*</td>
-            </tr>
+            {% endfor %}
+            {% for act in tee.tee_time_users.all %}
+            <!--Should probably have this loaded in the view-->
+            {% if user.username != act.user.username %}
+                <tr>
+                    <td>{{act.user.username}}</td>
+                    <td>{{act.user.email}}</td>
+                    <td>{{act.user_phone_number}}</td>
+                    <td>Already Matched!</td>    
+                </tr>
+            {% endif %}
+       {% endfor %}
         </table>
-    </div>
+    {% endfor %}
+</div>
+
+
 
 
     <div class="logout-button">

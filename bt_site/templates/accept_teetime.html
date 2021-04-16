@@ -1,0 +1,13 @@
+{% block title %}Accept!!! {{ to_username }} as a Teetime friend! Tee time id: {{ to_teetime.id }} {% endblock %}
+
+<p>test</p>
+{% if not to_username == request.user.username %}
+<p>test</p>
+{% if errors %}<p>{{ errors|join:", " }}</p>{% endif %}
+<p>test</p>
+<form method="post">
+{% csrf_token %}
+<input type="hidden" name="to_username" value="{{ to_username }}" />
+<input type="submit" value="add {{ to_username }} as a friend/teetime" />
+</form>
+{% endif %}
