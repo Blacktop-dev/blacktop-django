@@ -1,3 +1,6 @@
 from django.contrib import admin
+from bt_site.models import UserProfile, TeeTime, TeeTimeGroup
 
-# Register your models here.
+admin.site.register(UserProfile)
+admin.site.register(TeeTime)
+admin.site.register(TeeTimeGroup)

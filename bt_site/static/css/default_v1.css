@@ -1,0 +1,99 @@
+@font-face {
+    font-family: 'staatlichesregular';
+    src: url('fonts/staatliches-regular-webfont.woff2') format('woff2'),
+         url('fonts/staatliches-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    height: 100%;
+}
+
+
+
+
+/* GENERAL UTILITY */
+
+.centered {
+    display: block;
+    text-align: center;
+}
+
+.table { /* this overwrites bootstrap table */
+    border-spacing: 10px;
+}
+
+.white-text {
+    color: white;
+}
+
+
+
+
+/* BACKGROUNDS */
+
+body.login {
+    background-image: url('../images/tara_iti.jpg');
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+body.signup {
+    background-image: url('../images/friars_head.jpg');
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+
+/* NAVBAR */
+
+.navbar-custom {
+    background-color: #bfccb4;
+}
+
+.nav-item-custom {
+    color: black;
+}
+
+
+
+
+/* FORMS */
+#signup-form {
+    /* border: red; */
+    /* background-color: red; */
+    /* outline: red; */
+    /* width: 20%; */
+}
+
+input {
+    width: 20%;
+    border: 2px solid red;
+}
+
+
+
+/* MY TEE TIMES PAGE */
+#tee-time-table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
+/* LOGOUT */
+.logout-button {
+    position: fixed;
+    bottom: 0;
+    left: 48%;
+}
+
+
