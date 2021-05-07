@@ -34,12 +34,19 @@ class ProfileForm(ModelForm):
         # this controls what model is filled with the contents of this form
         model = UserProfile
         # these fields are the model fields that are shown on the form
-        fields = ['user_phone_number']
+        fields = ['user_handicap', 'user_style', 'user_pace', 'user_partners']
+        help_texts = {
+            'user_handicap': 'Unofficial OK'
+        }
 
 class ShuttleTimeForm(ModelForm):
     class Meta:
         model = Shuttle
         fields = ['shuttle_destination', 'shuttle_time_date', 'shuttle_time']
+        help_texts = {
+            'shuttle_time_date': '(MM/DD/YY)',
+            'shuttle_time': '(HH:MM)'
+        }
 '''class FriendRequestForm(ModelForm):
     class Meta:
         model = Friend

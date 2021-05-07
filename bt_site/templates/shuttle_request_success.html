@@ -8,14 +8,16 @@
 <div>
     <br><br><br><br>
 
+    {% if loggedIn %}
     <div class="centered">
         <h2>Congratulations! Your shuttle time request was accepted.</h2>
         <p>Use the navigation bar at the top of the page to view your posting or go somewhere else.</p>
     </div>
 </div>
     
+    {% else %}
+    <h1 class='centered'>You must log in or sign up to submit a shuttle time!</h1>
+    
+    {% endif %}
 
 {% endblock %}
-
-<a href="{% url 'bt_site:index' %}">Back to home page</a>
-

@@ -6,11 +6,27 @@
     font-style: normal;
 }
 
+
+/* COLORS
+
+White/gray - #f0f0eb - 240, 240, 235
+#75c223 - 117, 194, 35
+Neon CTA - #94f52c - 148, 245, 44
+#b9f776 - 185, 247, 118
+
+*/
+
 body, html {
     height: 100%;
 }
 
-
+.logo {
+    color: white;
+    /* font-size: larger; */
+    /* font-weight: bold; */
+    font-family: 'staatlichesregular';
+    font-size: 200%;
+}
 
 
 /* GENERAL UTILITY */
@@ -28,55 +44,277 @@ body, html {
     color: white;
 }
 
+.desc-text {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.black-link {
+    color: black;
+    text-decoration: none;
+}
+
+.small-text {
+    font-size: 12px;
+}
+
+.center-block-text {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.align-text-left {
+    text-align: left;
+}
+
+.page-heading {
+    color: #587538;
+}
+
+.half-width {
+    width: 50%;
+    margin: 0 auto;
+}
+
+
+/* HOMEPAGE */
+div.upper_box{
+    position: block;
+    background-image: url("Ross.png");
+    background-repeat: no-repeat;
+    background-position: center; 
+    width: 100%;
+    height: 350px;
+}
+
+div.opaque_box{
+    vertical-align: bottom;
+    margin-top: 20%;
+    background-color: black;
+    opacity: 70%;
+    width: 100%;
+    height: 20%;
+
+}
+
+div.ub_head_text{
+    text-align: left;
+    padding-left: 10%;
+    font-size: 17pt;
+    color: yellowgreen;
+}
+
+div.ub_main_text{
+    text-align: center;
+    vertical-align: bottom;
+    color: white;
+    font-size: 18pt;
+    padding-top: 2%;
+}
+
+div.s_text_box{
+    display: inline-block;
+    vertical-align: text-top;
+    /* background-color: white; */
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+
+
+div.s_text_box_title{
+    vertical-align: top;
+    font-weight: bold;
+    font-size: 15pt;
+    color: rgba(88, 117, 56, 1);
+}
+
+div.login_pill{
+    
+    background-color: rgba(148, 245, 44, 1);
+    border: none;
+    color: black;
+    padding: 5px 10px;
+    font-size: 15pt;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 16px;
+}
+
+div.login_pill:hover{
+    background-color: rgb(67, 140, 75);
+}
+
+div.s_text_box_text{
+    width: 250px;
+    height: auto;
+}
+
+div.circle_w_text{
+    display: inline-block;
+    vertical-align: text-top;
+}
+
+div.circle_w_text_outside::after{
+    width: 112px;
+    height: 47px;
+    border-bottom: 100px solid black;
+    position: absolute;
+}
+
+div.circle_text{
+    width: 250px;
+    height: auto;
+}
+
+div.circle{
+    height: 70px;
+    width: 70px;
+    background-color: rgb(227, 9, 9);
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: center;
+    display: inline-block;
+    
+
+}
+div.circle_num{
+    padding-top: 12px;
+    font-weight: bold;
+    font-size: 30pt;
+}
+
+div.upper-image {
+    width: 100%;
+}
+
+/* #homepage-grid {
+    display: grid;
+    grid-template-columns: 5% 30% 30% 30% 5%;
+    grid-template-rows: 50% 50%;
+}
+
+#top-left {
+    grid-column: 2;
+    grid-row: 1;
+} */
 
 
 
 /* BACKGROUNDS */
 
 body.login {
-    background-image: url('../images/tara_iti.jpg');
+    /* background-image: url('../images/tara_iti.jpg'); */
+    background-image: url('../images/sleepy_hollow.jpg');
     height: 100%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-body.signup {
-    background-image: url('../images/friars_head.jpg');
+body.signup-background {
+    background-image: url('../images/sleepy_hollow.jpg');
     height: 100%;
+    width: 100%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
+div.home-background {
+    background-image: url('../images/bethpage.jpg');
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
+div.content-background {
+    background-color: rgba(240, 240, 235, .7);
+    margin-left: 15%;
+    margin-right: 15%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.normal-background {
+    background-color: #f0f0eb;
+    height: auto;
+    min-height: 100%;
+    width: 100%;
+}
 
 
 /* NAVBAR */
 
 .navbar-custom {
-    background-color: #bfccb4;
+    /* background-color: #b9f776; */
+    /* background-color: #75c223; */
+    /* background-color: rgba(148, 245, 44, 1); */
+    /* background-color: rgba(88, 117, 56, 1); */
+    background-color: black;
 }
 
 .nav-item-custom {
-    color: black;
+    /* color: white; */
+    color: #51db92;
 }
 
 
 
 
 /* FORMS */
-#signup-form {
-    /* border: red; */
-    /* background-color: red; */
-    /* outline: red; */
-    /* width: 20%; */
+.form-background {
+    /* background-color:rgba(130, 194, 173, 0.7); */
+    /* background-color: rgba(185, 247, 118, .7); */
+    /* background-color: #51db92; */
+    background-color: #292b2c;
+    /* margin-left: 30%;
+    margin-right: 30%; */
+    margin: 0 auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    width: 40%;
+    border-radius: 2em;
 }
 
-input {
-    width: 20%;
-    border: 2px solid red;
+.form-center-no-bg {
+    margin-left: 40%;
+    margin-right: 40%;
 }
+
+/* input {
+    width: 300px;
+    border: 2px solid green;
+} */
+
+.form-field-title {
+    /* font-weight: bold; */
+    /* color: #97e1ba; */
+    color: white;
+}
+
+.default-field {
+    width: 300px;
+    border: 2px solid green;
+}
+
+
+/* VIEW TEE TIMES PAGE */
+.booked {
+    background-color: lightyellow;
+}
+
+.non-booked {
+    background-color: lightgreen;
+}
+
 
 
 
@@ -84,6 +322,14 @@ input {
 #tee-time-table {
     margin-left: auto;
     margin-right: auto;
+}
+
+.accepted {
+    background-color: lightgreen;
+}
+
+.outstanding {
+    background-color: lightcoral;
 }
 
 

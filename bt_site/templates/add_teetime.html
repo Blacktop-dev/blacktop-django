@@ -1,24 +1,79 @@
-{% block title %}Join {{ to_username }}'s ride! Shuttle Ride id: {{ to_teetime.id }} {% endblock %}
+{% extends "base.html" %}
 
-<p>TO DO: PUT MORE INFO HERE ABOUT THE RIDE</p>
+{% block title %}Join this ride!{% endblock %}
 
-{% for us in to_teetime.tee_time_users.all %}
-	<p>test in loop actuals</p>
-	{{us.user.username}}
-{% endfor %}
+{% block body_class %}normal-background{% endblock %}
 
-{% for us in to_teetime.tee_time_potential_users.all %}
-	<p>test in loop potentials</p>
-	{{us.user.username}}
-{% endfor %}
-<br>
-Username: {{ to_username }}
+{% block content %}
 
+Shuttle Ride id: {{ to_teetime.id }} 
+
+<div class='centered'>
+    <br><br><br>
+    <h2 class='page-heading'>Pickup Schedule</h2>
+	<br>
+	<table class='table table-striped table-dark table-hover half-width'>
+	<thead class='thead-dark'>
+		<tr>
+			<th>Time</th>
+			<th>Location</th>
+		</tr>
+	</thead>
+		<tr>
+			<td>11:30am</td>
+			<td>3rd Ave and 14th Street</td>
+		</tr>
+		<tr>
+			<td>11:45am</td>
+			<td>10th Ave and W 110th Street</td>
+		</tr>
+		<tr>
+			<td>12:40pm</td>
+			<td>Spook Rock</td>
+		</tr>
+		<tr>
+			<td>12:50pm</td>
+			<td>Darlington</td>
+		</tr>
+		<tr>
+			<td>1:00pm</td>
+			<td>New York Country Club</td>
+		</tr>
+		<tr>
+			<td>6:00pm</td>
+			<td>Spook Rock</td>
+		</tr>
+		<tr>
+			<td>6:15pm</td>
+			<td>Darlington</td>
+		</tr>
+		<tr>
+			<td>6:30pm</td>
+			<td>New York Country Club</td>
+		</tr>
+		<tr>
+			<td>7:15pm</td>
+			<td>10th Ave and W 110th Street</td>
+		</tr>
+		<tr>
+			<td>7:30pm</td>
+			<td>3rd Ave and 14th Street</td>
+		</tr>
+	</table>
+</table>
+</div>
+
+<!-- Username: {{ to_username }} -->
+<div class='centered'>
+	<br><br>
 {% if not to_username == request.user.username %}
 {% if errors %}<p>{{ errors|join:", " }}</p>{% endif %}
 <form method="post">
 {% csrf_token %}
-<input type="hidden" name="to_username" value="{{ to_username }}" />
-<input type="submit" value="join ride" />
+<input type="hidden" name="to_username" value="test" />
+<input type="submit" class='btn btn-outline-success' value="Join Ride" />
 </form>
 {% endif %}
+</div>
+
+{% endblock %}
