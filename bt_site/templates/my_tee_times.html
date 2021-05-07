@@ -55,29 +55,29 @@
 
        <table class='table' id="tee-time-table">
             <tr>
-                <th>Name</th>
-                <th>Email</th>
+                <th>Other Riders:</th>
+                <!--<th>Email</th>
                 <th>Phone Number</th>
-                <th>Status</th>
+                <th>Status</th>-->
             </tr>
-            {% for pot in tee.shuttle_potential_users.all %}
-            <tr>
+            {% comment %}{% for pot in tee.shuttle_potential_users.all %}
+            <!--<tr>
                 <td>{{pot.user.username}}</td>
                 <td>{{pot.user.email}}</td>
                 <td>{{pot.user_phone_number}}</td>
                 <td>
                     <a href="{% url 'bt_site:accept_teetime_request' pot.user.username tee.id %}">Pending Request</a>
-                </td>    
-            </tr>
-            {% endfor %}
+                </td>  
+            </tr>-->
+            {% endfor %} {% endcomment %}
             {% for act in tee.shuttle_users.all %}
             <!--Should probably have this loaded in the view-->
             {% if user.username != act.user.username %}
                 <tr>
                     <td>{{act.user.username}}</td>
-                    <td>{{act.user.email}}</td>
+                    <!--<td>{{act.user.email}}</td>
                     <td>{{act.user_phone_number}}</td>
-                    <td>Already Matched!</td>    
+                    <td>Already Matched!</td>  -->  
                 </tr>
             {% endif %}
        {% endfor %}

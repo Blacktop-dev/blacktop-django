@@ -261,7 +261,7 @@ def add_friendteetime(
         from_user = request.user
         try:
             to_teetime.shuttle_potential_users.set([from_user.userprofile])
-            to_teetime.shuttle_users.add([from_user.userprofile])
+            to_teetime.shuttle_users.add(from_user.userprofile)
             to_teetime.save()
             ctx["to_teetime"] = to_teetime
             #Friend.objects.add_friend(from_user, to_user)
