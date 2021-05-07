@@ -1,4 +1,4 @@
-{% block title %}Join {{ to_username }}'s ride! Shuttle Ride id: {{ to_teetime.id }} {% endblock %}
+{% block title %}Join the ride! Shuttle Ride id: {{ to_teetime.id }} {% endblock %}
 
 <p>TO DO: PUT MORE INFO HERE ABOUT THE RIDE</p>
 
@@ -18,7 +18,7 @@ Username: {{ to_username }}
 {% if errors %}<p>{{ errors|join:", " }}</p>{% endif %}
 <form method="post">
 {% csrf_token %}
-<input type="hidden" name="to_username" value="{{ to_username }}" />
+<input type="hidden" name="to_username" value="test" />
 <input type="submit" value="join ride" />
 </form>
 {% endif %}

@@ -74,22 +74,34 @@
         <tr>
                     <th>Time</th>
                     <th>Course/Dest.</th>
-                    <th>Creator Name</th>
+                    <th>Current Riders</th>
                     <th>Price</th>
                     <th>Available Seats</th>
                     <th>Request</th>
         </tr>
         {% for tee in tee_time_group.shuttles.all %}
-            {% for us in tee.shuttle_users.all %}
-                    <tr>
-                        <td>{{ tee.shuttle_time }}</td>
-                        <td>{{ tee.shuttle_destination }}</td>
-                        <td>{{ us.user.username }}</td>
-                        <td>$$$$</td>
-                        <td>{{ -6|add:tee.shuttle_availability }}</td>
-                        <td><a href="{% url 'bt_site:add_friendteetime' us.user.username tee.id %}">join this ride!</a></td>
-                    </tr>
-            {% endfor %}
+            {% if not tee.is_full %}
+                <tr>
+                <td>{{ tee.shuttle_time }}</td>
+                <td>{{ tee.shuttle_destination }}</td>
+                <td> |
+                {% for us in tee.shuttle_users.all %}
+                    {{ us.user.username }} |
+                {% endfor %}
+                </td>
+                <td>${{ tee.shuttle_price }}</td>
+                <td>{{ -1|add:tee.shuttle_availability }}</td>
+                <td>
+
+                    <!-- Should eventually ove this computation out of the tempalte -->
+                    {% if user in tee.shuttle_users.all %}
+                        <p>Already joined ride!</p>
+                    {% else %}
+                        <a href="{% url 'bt_site:add_friendteetime' tee.id %}">join this ride!</a>
+                    {% endif %}
+                </td>
+                </tr>
+            {% endif %}
         {% endfor %}
 </table>
 {% endfor %}

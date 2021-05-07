@@ -172,6 +172,9 @@ class LogoutView(View, LoginRequiredMixin):
 def sent_success(request):
 	return render(request, "friend_request_success.html")
 
+def sent_failure(request):
+    return render(request, "join_ride_failure.html")
+
 # class Display(ListView):
 #     template_name = 'display.html'
 #     model = User
@@ -249,22 +252,31 @@ def friendship_add_friend(
 
 @login_required
 def add_friendteetime(
-    request, to_username, to_teetime, template_name="add_teetime.html"
+    request, to_teetime, template_name="add_teetime.html"
 ):
     """ Create a FriendshipRequest """
-    to_user = user_model.objects.get(username=to_username)
+    #to_user = user_model.objects.get(username=to_username)
     to_teetime = Shuttle.objects.get(id=to_teetime)
     #relevant_teetime = to_teetime
-    ctx = {"to_username": to_username, "target_person": to_user, "to_teetime": to_teetime}
+    #ctx = {"to_username": to_username, "target_person": to_user, "to_teetime": to_teetime}
+    ctx = {"to_teetime": to_teetime}
 
     if request.method == "POST":
         from_user = request.user
         try:
-            to_teetime.shuttle_potential_users.set([from_user.userprofile])
-            to_teetime.shuttle_users.add(from_user.userprofile)
-            to_teetime.save()
-            ctx["to_teetime"] = to_teetime
-            #Friend.objects.add_friend(from_user, to_user)
+            rider_availability = to_teetime.shuttle_availability - 1
+            if rider_availability > 0:
+                to_teetime.shuttle_availability -= 1
+                if to_teetime.shuttle_availability == 0:
+                    to_teetime.is_full = True
+
+
+                to_teetime.shuttle_potential_users.set([from_user.userprofile])
+                to_teetime.shuttle_users.add(from_user.userprofile)
+                to_teetime.save()
+                ctx["to_teetime"] = to_teetime
+            else:
+                return redirect('/sent/failure/')
         except AlreadyExistsError as e:
             ctx["errors"] = ["%s" % e]
         else:

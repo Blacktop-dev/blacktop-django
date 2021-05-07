@@ -36,6 +36,8 @@ class Shuttle(models.Model):
     shuttle_time = models.TimeField('Time of Shuttle Ride')
     shuttle_availability = models.IntegerField(default=6)
     shuttle_destination = models.CharField('Golf Course', max_length=30, choices=COURSE_CHOICES)
+    is_full = models.BooleanField(default=False)
+    shuttle_price = models.DecimalField(max_digits=100, decimal_places=2, default=100.00)
 
 #so that can have all shuttles in one day in the same group
 class ShuttleGroup(models.Model):
