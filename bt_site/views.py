@@ -7,9 +7,10 @@ from django.views.generic import TemplateView, ListView, CreateView
 from django.views.generic.base import View
 from friendship.models import Friend, Follow, Block
 
-from .forms import ProfileForm, TeeTimeForm
+from .forms import ProfileForm, ShuttleTimeForm#TeeTimeForm
 from .forms import UserForm#, FriendRequestForm
-from .models import User, UserProfile, TeeTime, TeeTimeGroup
+#from .models import User, UserProfile, TeeTime, TeeTimeGroup
+from .models import User, UserProfile, Shuttle, ShuttleGroup
 from .filters import UserFilter
 from django.contrib.auth.decorators import login_required
 
@@ -76,41 +77,42 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = {}
         ctx['loggedIn'] = False
+        #ctx['users'] = UserProfile.objects.all()
         if self.request.user.is_authenticated:
             ctx['loggedIn'] = True
         return ctx
 
 #Jess - tee time create view
-class AddTeeTimeView(TemplateView):
+class AddShuttleView(TemplateView):
     template_name = 'add_tee_time.html'
 
     def get_context_data(self, **kwargs):
-        ctx = super(AddTeeTimeView, self).get_context_data(**kwargs)
-        ctx['tee_time_form'] = TeeTimeForm(prefix='tee')
+        ctx = super(AddShuttleView, self).get_context_data(**kwargs)
+        ctx['shuttle_time_form'] = ShuttleTimeForm(prefix='shuttle')
         ctx['loggedIn'] = False
         if self.request.user.is_authenticated:
             ctx['loggedIn'] = True
         return ctx
 
     def post(self, request, *args, **kwargs):
-        tee_time_form = TeeTimeForm(request.POST, prefix='tee')
-        if tee_time_form.is_valid():
-            tee_time = tee_time_form.save(commit=False)
-            tee_time.save()
-            tee_time.tee_time_users.set([self.request.user.userprofile])
-            tee_time.save()
+        shuttle_time_form = ShuttleTimeForm(request.POST, prefix='shuttle')
+        if shuttle_time_form.is_valid():
+            shuttle_time = shuttle_time_form.save(commit=False)
+            shuttle_time.save()
+            shuttle_time.shuttle_users.set([self.request.user.userprofile])
+            shuttle_time.save()
             #group_obj = TeeTimeGroup.objects.filter(tee_group_date=cleaned_info[tee_time.tee_time_date])
-            group_obj = TeeTimeGroup.objects.filter(tee_group_date=tee_time.tee_time_date)
+            group_obj = ShuttleGroup.objects.filter(shuttle_group_date=shuttle_time.shuttle_time_date)
             if group_obj.count() == 0:
-                gg = TeeTimeGroup(tee_group_date=tee_time.tee_time_date)
+                gg = ShuttleGroup(shuttle_group_date=shuttle_time.shuttle_time_date)
                 gg.save()
-                gg.tee_group_members.set([tee_time])
+                gg.shuttles.set([shuttle_time])
             else:
-                group_obj = TeeTimeGroup.objects.get(tee_group_date=tee_time.tee_time_date)
-                group_obj.tee_group_members.add(tee_time)
-            return HttpResponse("Made the tee!<br><a href='/my_tee_times'>Go to home</a>")
+                group_obj = ShuttleGroup.objects.get(shuttle_group_date=shuttle_time.shuttle_time_date)
+                group_obj.shuttles.add(shuttle_time)
+            return HttpResponse("Made the shuttle time!<br><a href='/my_tee_times'>Go to home</a>")
         else:
-            return HttpResponse("Error with tee : <a href='/signup'>Try again</a>!")
+            return HttpResponse("Error with shuttle : <a href='/signup'>Try again</a>!")
 
 
 
@@ -122,7 +124,7 @@ class FindRidesView(TemplateView):
         ctx['loggedIn'] = False
         if self.request.user.is_authenticated:
             ctx['loggedIn'] = True
-            ctx['tee_times'] = TeeTimeGroup.objects.all().order_by('tee_group_date').reverse()
+            ctx['shuttle_times'] = ShuttleGroup.objects.all().order_by('shuttle_group_date').reverse()
         return ctx
 
 class MyTeeTimesView(TemplateView):
@@ -135,11 +137,30 @@ class MyTeeTimesView(TemplateView):
             ctx['loggedIn'] = True
             UserP = self.request.user.userprofile
             #the tee_time_potential_users refers to the related name in the model, so don't have to use _set.all()
-            ctx['tee_times'] = UserP.tee_time_users.all()
+            ctx['shuttle_times'] = UserP.shuttle_time_users.all()
             ctx['user'] = self.request.user
         return ctx
 
 
+class SocialView(TemplateView):
+    template_name = 'social_page.html'
+
+    def get_context_data(self, **kwargs):
+        ctx = {}
+        ctx['loggedIn'] = False
+        if self.request.user.is_authenticated:
+            ctx['loggedIn'] = True
+            ctx['all_users'] = UserProfile.objects.all()
+        return ctx
+
+@login_required
+def message_view(
+    request, to_user, template_name="message.html"):
+    to_user = user_model.objects.get(id=to_user)
+    from_user = request.user
+    ctx = {"to_user": to_user, "from_user": from_user}
+
+    return render(request, template_name, ctx)
 
 ### GENERAL VIEWS ###
 
@@ -232,14 +253,15 @@ def add_friendteetime(
 ):
     """ Create a FriendshipRequest """
     to_user = user_model.objects.get(username=to_username)
-    to_teetime = TeeTime.objects.get(id=to_teetime)
+    to_teetime = Shuttle.objects.get(id=to_teetime)
     #relevant_teetime = to_teetime
     ctx = {"to_username": to_username, "target_person": to_user, "to_teetime": to_teetime}
 
     if request.method == "POST":
         from_user = request.user
         try:
-            to_teetime.tee_time_potential_users.set([from_user.userprofile])
+            to_teetime.shuttle_potential_users.set([from_user.userprofile])
+            to_teetime.shuttle_users.add([from_user.userprofile])
             to_teetime.save()
             ctx["to_teetime"] = to_teetime
             #Friend.objects.add_friend(from_user, to_user)
@@ -257,15 +279,15 @@ def accept_teetime_request(
 ):
     """ Create a FriendshipRequest """
     to_user = user_model.objects.get(username=to_username)
-    to_teetime = TeeTime.objects.get(id=to_teetime)
+    to_teetime = Shuttle.objects.get(id=to_teetime)
     #relevant_teetime = to_teetime
     ctx = {"to_username": to_username, "target_person": to_user}
 
     if request.method == "POST":
         from_user = request.user
         try:
-            to_teetime.tee_time_users.add(to_user.userprofile)
-            to_teetime.tee_time_potential_users.remove(to_user.userprofile)
+            to_teetime.shuttle_users.add(to_user.userprofile)
+            to_teetime.shuttle_potential_users.remove(to_user.userprofile)
             to_teetime.save()
             ctx["to_teetime"] = to_teetime
             #Friend.objects.add_friend(from_user, to_user)

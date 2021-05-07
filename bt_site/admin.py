@@ -1,6 +1,6 @@
 from django.contrib import admin
-from bt_site.models import UserProfile, TeeTime, TeeTimeGroup
+from bt_site.models import UserProfile, Shuttle, ShuttleGroup
 
 admin.site.register(UserProfile)
-admin.site.register(TeeTime)
-admin.site.register(TeeTimeGroup)
+admin.site.register(Shuttle)
+admin.site.register(ShuttleGroup)

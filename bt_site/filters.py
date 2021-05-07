@@ -1,5 +1,5 @@
 import django_filters
-from .models import UserProfile, TeeTime
+from .models import UserProfile, Shuttle
 
 class UserFilter(django_filters.FilterSet):
 	class Meta:
@@ -15,7 +15,7 @@ class UserFilter(django_filters.FilterSet):
 
 class TeeTimeFilter(django_filters.FilterSet):
 	class Meta:
-		model = TeeTime
+		model = Shuttle
 		fields = {
-			'tee_time_course': ['icontains']
+			'shuttle_destination': ['icontains']
 		}

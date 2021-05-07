@@ -22,7 +22,7 @@
                         <a class="nav-link nav-item-custom" href="{% url 'bt_site:index' %}">About</a>
                     </li>
                     <li>
-                        <a class="nav-link nav-item-custom" href="{% url 'bt_site:add_tee_time' %}">Add Tee Time</a>
+                        <a class="nav-link nav-item-custom" href="{% url 'bt_site:shuttle_tee_time' %}">Add Tee Time</a>
                     </li>
                     <li>
                         <a class="nav-link nav-item-custom" href="{% url 'bt_site:find_rides' %}">View Tee Times</a>
@@ -41,6 +41,9 @@
     </nav>
 
 <!--vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv---PAGE CONTENT HERE---vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv-->
+
+
+
 <div>
     <br><br><br><br><br>
     <p>View players for potential rides here</p>
@@ -57,26 +60,34 @@
 </div>
 
 <div>
-    {{ tee_time}}
+    {{ shuttle_time}}
 </div>
 {% endcomment %}
 <!-- THE LOOP DISPLAYING TEE TIMES STARTS HERE -->
 <div class='centered'>
-{% for tee_time_group in tee_times %}
+<h3><i>Note: All trips are round trip and will return 6 hours after arrival</i></h3>
+<br>
+{% for tee_time_group in shuttle_times %}
     <table class='table' id="tee-time-table">
 
-        <h1>Tee Times on {{ tee_time_group.tee_group_date }}</h1>
+        <h1>Shuttle Rides on {{ tee_time_group.shuttle_group_date }}</h1>
         <tr>
-                    <th>Course</th>
-                    <th>Name</th>
+                    <th>Time</th>
+                    <th>Course/Dest.</th>
+                    <th>Creator Name</th>
+                    <th>Price</th>
+                    <th>Available Seats</th>
                     <th>Request</th>
         </tr>
-        {% for tee in tee_time_group.tee_group_members.all %}
-            {% for us in tee.tee_time_users.all %}
+        {% for tee in tee_time_group.shuttles.all %}
+            {% for us in tee.shuttle_users.all %}
                     <tr>
-                        <td>{{ tee.tee_time_course }}</td>
+                        <td>{{ tee.shuttle_time }}</td>
+                        <td>{{ tee.shuttle_destination }}</td>
                         <td>{{ us.user.username }}</td>
-                        <td><a href="{% url 'bt_site:add_friendteetime' us.user.username tee.id %}">add as this time/person!</a></td>
+                        <td>$$$$</td>
+                        <td>{{ -6|add:tee.shuttle_availability }}</td>
+                        <td><a href="{% url 'bt_site:add_friendteetime' us.user.username tee.id %}">join this ride!</a></td>
                     </tr>
             {% endfor %}
         {% endfor %}

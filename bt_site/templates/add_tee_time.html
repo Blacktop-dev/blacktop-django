@@ -22,7 +22,7 @@
                         <a class="nav-link nav-item-custom" href="{% url 'bt_site:index' %}">About</a>
                     </li>
                     <li>
-                        <a class="nav-link nav-item-custom" href="{% url 'bt_site:add_tee_time' %}">Add Tee Time</a>
+                        <a class="nav-link nav-item-custom" href="{% url 'bt_site:shuttle_tee_time' %}">Add Tee Time</a>
                     </li>
                     <li>
                         <a class="nav-link nav-item-custom" href="{% url 'bt_site:find_rides' %}">View Tee Times</a>
@@ -44,15 +44,16 @@
 
 <div>
     <br><br><br><br><br>
-    <p>Form here to add new tee time</p>
+    <p>Form here to add new shuttle time</p>
     <br>
 
     {% if loggedIn %}
     <div class="centered">
-        <form action="{% url 'bt_site:add_tee_time' %}" enctype="multipart/form-data" method="post"><!-- id='teetime-form'>-->
+        <p><i>Note: Add Date as MM/DD/YY and Time as HH:MM</i></p>
+        <form action="{% url 'bt_site:shuttle_tee_time' %}" enctype="multipart/form-data" method="post"><!-- id='teetime-form'>-->
             {% csrf_token %}
-            {{ tee_time_form.as_p }}
-            <button type="submit">Submit Tee Time</button>
+            {{ shuttle_time_form.as_p }}
+            <button type="submit">Submit Shuttle Time</button>
         </form>
     </div>
 
@@ -61,7 +62,7 @@
     </div>
     
     {% else %}
-    <h1 class='centered'>You must log in or sign up to submit a tee time!</h1>
+    <h1 class='centered'>You must log in or sign up to submit a shuttle time!</h1>
     
     {% endif %}
 </div>

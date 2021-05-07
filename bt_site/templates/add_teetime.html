@@ -1,6 +1,6 @@
-{% block title %}Add {{ to_username }} as a Friend! Tee time id: {{ to_teetime.id }} {% endblock %}
+{% block title %}Join {{ to_username }}'s ride! Shuttle Ride id: {{ to_teetime.id }} {% endblock %}
 
-<p>TESTING TEE TIME ADDING</p>
+<p>TO DO: PUT MORE INFO HERE ABOUT THE RIDE</p>
 
 {% for us in to_teetime.tee_time_users.all %}
 	<p>test in loop actuals</p>
@@ -19,6 +19,6 @@ Username: {{ to_username }}
 <form method="post">
 {% csrf_token %}
 <input type="hidden" name="to_username" value="{{ to_username }}" />
-<input type="submit" value="add {{ to_username }} as a friend/teetime" />
+<input type="submit" value="join ride" />
 </form>
 {% endif %}
